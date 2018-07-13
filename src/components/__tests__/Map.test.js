@@ -1,16 +1,26 @@
 import React from 'react'
 import {shallow} from 'enzyme'
 import Map from '../Map'
-let mountMap;
-beforeEach(()=> {
-   mountMap = shallow(<Map />)
-})
-describe('Map', function(){
-  it('run app without crash', function(){
 
+describe('Map',() => {
+  let mountedMap;
+  let props;
+  beforeEach(function(){
+    props = {
+      'imageName' : "testMap.png"
+    }
+    mountedMap = shallow(<Map />)
   })
-  it('renders a map', function() {
-    const img = mountMap.find('img')
-    expect(img.length).toBe(1)
+  it('renders app without crash', () => {
+    let mountMap = shallow(<Map />)
   })
+  it('renders none when no image is passed', function(){
+    let defaultMap = shallow(<Map />)
+    const defaultImg = defaultMap.find('img [src="../public/images/none.png"]')
+    expect(defaultImg.length).toBe(1)
+  })
+  // it('displays the map image when no params are given to it', function(){
+  //   const testMap = mountedMap.find('img [src="../public/images/testMap.png"]')
+  //   expect(testMap.length).toBe(1)
+  // })
 })

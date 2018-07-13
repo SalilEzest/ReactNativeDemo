@@ -19,7 +19,7 @@ describe('Header', function(){
 describe('Buttons', function(){
   it('renders buttons without crashing', function(){
     const buttons = mountStoreLocator.find('Button')
-    expect(buttons.length).toBe(2)
+    expect(buttons.length).toBe(3)
   })
 })
 
@@ -27,5 +27,14 @@ describe('Map', function(){
   it('renders Map without crashing', function(){
     const map = mountStoreLocator.find('Map')
     expect(map.length).toBe(1)
+  })
+})
+
+describe('chooseMap', ()=> {
+  it('updates this.state.currentMap using the location passed to it',()=> {
+    let mountedStoreLocator = shallow(<StoreLocator />)
+    let mockEvent = {target :{value: 'testland'}}
+    mountedStoreLocator.instance().chooseMap(mockEvent)
+    expect(mountedStoreLocator.instance().state.currentMap).toBe('testland.png')
   })
 })
