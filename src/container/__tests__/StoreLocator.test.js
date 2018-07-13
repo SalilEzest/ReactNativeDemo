@@ -2,11 +2,34 @@ import React from 'react'
 // import ReactDOM from 'react-dom' //Do not need when using enzyme
 import {shallow} from 'enzyme'
 import StoreLocator from '../storeLocator'
+import axios from 'axios'
 
 let mountStoreLocator;
 beforeEach( ()=> {
   mountStoreLocator = shallow(<StoreLocator />)
 })
+
+describe('storeLocator', function(){
+  it('called axios.get in componentDidMount',() => {
+    return mountStoreLocator.instance().componentDidMount().then(()=> {
+      expect(axios.get).toHaveBeenCalled()
+    })
+  })
+  it('called axios.get with correct url',() => {
+    return mountStoreLocator.instance().componentDidMount().then(()=> {
+      expect(axios.get).toHaveBeenCalledWith('http://localhost:3000/data/shops.json')
+    })
+  })
+  it('updates the state with data from api',() => {
+    return mountStoreLocator.instance().componentDidMount().then(()=> {
+      expect(mountStoreLocator.state()).toHaveProperty('shops',[{
+        "location": "test location",
+        "address": "test address"
+      }])
+    })
+  })
+})
+
 describe('Header', function(){
   it('render without crashing', function(){
     // const div = document.createElement('div') //Do not need when using enzyme
